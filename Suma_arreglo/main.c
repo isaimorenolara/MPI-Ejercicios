@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     if (idProc == 0)
     {
         int *a;
-        int iProc;
+        int iProc, sumaTemp = 0;
         crearArreglo(&a, N);
         llenarArreglo(a, N);
         printf("Arreglo: ");
@@ -48,12 +48,11 @@ int main(int argc, char **argv)
 
         for (iProc = 1; iProc <= numProc - 1; iProc++)
         {
-            int sumaTemp;
             MPI_Recv(&sumaTemp, 1, MPI_INT, iProc, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             suma += sumaTemp;
         }
 
-        printf("\nLa suma total es: %d\n", suma);
+        printf("\nLa suma es: %d\n", suma);
         free(a);
     }
     else
