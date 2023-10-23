@@ -1,19 +1,27 @@
+/*
+    - Materia: Supercómputo
+    - Semestre: 2023-2024/I
+    - Nombre del alumno: Isai Vicente Moreno Lara
+    - Clave del alumno: 324591
+    - Carrera: Ing. Sistemas Inteligentes
+    - Nombre de tarea o programa: Suma de elementos de un arreglo
+    - Avance logrado (0 a 100%): 100%
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <mpi.h>
 
-void crearArreglo(int **a, int n);
-void llenarArreglo(int *a, int n);
-void imprimirArreglo(int *a, int n);
+void crearArreglo(int **arr, int tam);
+void llenarArreglo(int *arr, int tam);
+void imprimirArreglo(int *arr, int tam);
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     srand(time(NULL));
     int idProc, numProc;
-    int N = 15;
-    int suma = 0;
+    int N = 15, suma = 0;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &idProc);
@@ -28,7 +36,7 @@ int main(int argc, char *argv[])
         int iProc;
         crearArreglo(&a, N);
         llenarArreglo(a, N);
-        printf("Array: ");
+        printf("Arreglo: ");
         imprimirArreglo(a, N);
 
         for (iProc = 1; iProc <= numProc - 2; iProc++)
@@ -37,16 +45,16 @@ int main(int argc, char *argv[])
         }
 
         MPI_Send(&a[(numProc - 2) * nDatos], nDatosU, MPI_INT, numProc - 1, 0, MPI_COMM_WORLD);
-        free(a);
 
         for (iProc = 1; iProc <= numProc - 1; iProc++)
         {
-            int sumap;
-            MPI_Recv(&sumap, 1, MPI_INT, iProc, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            suma += sumap;
+            int sumaTemp;
+            MPI_Recv(&sumaTemp, 1, MPI_INT, iProc, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            suma += sumaTemp;
         }
 
         printf("\nLa suma total es: %d\n", suma);
+        free(a);
     }
     else
     {
@@ -73,26 +81,25 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void crearArreglo(int **a, int n)
+void crearArreglo(int **arr, int tam)
 {
-    *a = (int *)malloc(sizeof(int) * n);
+    *arr = (int *)malloc(sizeof(int) * tam);
 }
 
-void llenarArreglo(int *a, int n)
+void llenarArreglo(int *arr, int tam)
 {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < tam; i++)
     {
-        // a[i] = i + 1;
-        a[i] = 1 + rand() % 10;
+        arr[i] = 1 + rand() % 5;
     }
 }
 
-void imprimirArreglo(int *a, int n)
+void imprimirArreglo(int *arr, int tam)
 {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < tam; i++)
     {
-        printf("%d ", a[i]);
+        printf("%d ", arr[i]);
     }
 }

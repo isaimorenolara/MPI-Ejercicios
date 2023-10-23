@@ -1,19 +1,28 @@
+/*
+    - Materia: Supercómputo
+    - Semestre: 2023-2024/I
+    - Nombre del alumno: Isai Vicente Moreno Lara
+    - Clave del alumno: 324591
+    - Carrera: Ing. Sistemas Inteligentes
+    - Nombre de tarea o programa: Suma de 2 arreglos
+    - Avance logrado (0 a 100%): 100%
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <mpi.h>
 
-void crearArreglo(int **a, int n);
-void llenarArreglo(int *a, int n);
-void imprimirArreglo(int *a, int n);
-void inicializaArreglo(int *a, int n);
+void crearArreglo(int **arr, int tam);
+void llenarArreglo(int *arr, int tam);
+void imprimirArreglo(int *arr, int tam);
+void inicializaArreglo(int *arr, int tam);
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     srand(time(NULL));
     int idProc, numProc;
-    int N = 15;
+    int N = 10;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &idProc);
@@ -28,13 +37,13 @@ int main(int argc, char *argv[])
         int iProc, i;
         crearArreglo(&a, N);
         llenarArreglo(a, N);
-        printf("Array A: ");
+        printf("Arreglo A: ");
         imprimirArreglo(a, N);
         printf("\n");
 
         crearArreglo(&b, N);
         llenarArreglo(b, N);
-        printf("Array B: ");
+        printf("Arreglo B: ");
         imprimirArreglo(b, N);
         printf("\n");
 
@@ -63,10 +72,10 @@ int main(int argc, char *argv[])
             free(partial_sum);
         }
 
+        printf("Arreglo C: ");
+        imprimirArreglo(c, N);
         free(a);
         free(b);
-        printf("Array C: ");
-        imprimirArreglo(c, N);
         free(c);
     }
     else
@@ -89,7 +98,6 @@ int main(int argc, char *argv[])
         for (i = 0; i < nDatos; i++)
         {
             local_sum[i] = a[i] + b[i];
-            // printf("local_sum[%d] = %d\n", i, local_sum[i]);
         }
 
         MPI_Send(local_sum, nDatos, MPI_INT, 0, 0, MPI_COMM_WORLD);
@@ -102,35 +110,34 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void crearArreglo(int **a, int n)
+void crearArreglo(int **arr, int tam)
 {
-    *a = (int *)malloc(n * sizeof(int));
+    *arr = (int *)malloc(tam * sizeof(int));
 }
 
-void llenarArreglo(int *a, int n)
+void llenarArreglo(int *arr, int tam)
 {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < tam; i++)
     {
-        // a[i] = i + 1;
-        a[i] = 1 + rand() % 10;
+        arr[i] = 1 + rand() % 5;
     }
 }
 
-void imprimirArreglo(int *a, int n)
+void imprimirArreglo(int *arr, int tam)
 {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < tam; i++)
     {
-        printf("%d \t", a[i]);
+        printf("%d \t", arr[i]);
     }
 }
 
-void inicializaArreglo(int *a, int n)
+void inicializaArreglo(int *arr, int tam)
 {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < tam; i++)
     {
-        a[i] = 0;
+        arr[i] = 0;
     }
 }
