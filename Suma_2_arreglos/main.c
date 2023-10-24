@@ -61,15 +61,7 @@ int main(int argc, char **argv)
 
         for (iProc = 1; iProc <= numProc - 1; iProc++)
         {
-            int *partial_sum = (int *)malloc(nDatosU * sizeof(int));
-            MPI_Recv(partial_sum, nDatosU, MPI_INT, iProc, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
-            for (i = 0; i < (iProc == numProc - 1 ? nDatosU : nDatos); i++)
-            {
-                c[(iProc - 1) * nDatos + i] = partial_sum[i];
-            }
-
-            free(partial_sum);
+            MPI_Recv(&c[(iProc - 1) * nDatos], (iProc == numProc - 1) ? nDatosU : nDatos, MPI_INT, iProc, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         }
 
         printf("Arreglo C: ");

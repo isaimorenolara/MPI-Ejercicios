@@ -1,0 +1,22 @@
+MPI - Functions
+
+MPI_SEND(buf,count,datatype,dest,tag,comm)
+
+Where:
+    - buf -> initial address of the send buffer
+    - count -> number of elements in send buffer
+    - datatype -> data type of each send buffer element
+    - dest -> rank of destination
+    - tag -> message tag
+    - comm -> communicator
+
+MPI_RECV(buf,count,datatype,source,tag,comm,status)
+
+Where:
+    - buf -> initial address of the receive buffer
+    - count -> number of elements in receive buffer
+    - datatype -> data type of each receive buffer element
+    - source -> rank of source
+    - tag -> message tag
+    - comm -> communicator
+    - status -> status object
