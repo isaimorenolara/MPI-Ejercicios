@@ -1,22 +1,43 @@
 MPI - Functions
 
-MPI_SEND(buf,count,datatype,dest,tag,comm)
+MPI_SEND(buf, count, datatype, dest, tag, comm)
 
 Where:
-    - buf -> initial address of the send buffer
-    - count -> number of elements in send buffer
-    - datatype -> data type of each send buffer element
-    - dest -> rank of destination
-    - tag -> message tag
-    - comm -> communicator
+    - buf -> initial address of the send buffer (choice)
+    - count -> number of elements in send buffer (integer >= 0)
+    - datatype -> data type of each send buffer element (handle)
+    - dest -> rank of destination (integer)
+    - tag -> message tag (integer)
+    - comm -> communicator (handle)
 
-MPI_RECV(buf,count,datatype,source,tag,comm,status)
+MPI_RECV(buf, count, datatype, source, tag, comm, status)
 
 Where:
-    - buf -> initial address of the receive buffer
-    - count -> number of elements in receive buffer
-    - datatype -> data type of each receive buffer element
-    - source -> rank of source
-    - tag -> message tag
-    - comm -> communicator
-    - status -> status object
+    - buf -> initial address of the receive buffer (choice)
+    - count -> number of elements in receive buffer (integer >= 0)
+    - datatype -> data type of each receive buffer element (handle)
+    - source -> rank of source (integer)
+    - tag -> message tag (integer)
+    - comm -> communicator (handle)
+    - status -> status object (status)
+
+MPI_Bcast(buf, count, datatype, root, comm)
+
+Where:
+    - buf -> initial address of buffer (choice)
+    - count -> number of entries in buffer (integer)
+    - datatype -> data type of buffer (handle)
+    - root -> rank of broadcast root (integer)
+    - comm -> communicator (handle)
+
+MPI_SCATTER(inbuf, incnt, intype, outbuf, outcnt, outtype, root, comm)
+
+Where:
+    - inbuf -> address of input buffer (choice)
+    - incnt -> number of elements sent to each (integer)
+    - intype -> datatype of input buffer elements (handle)
+    - outbuf -> address of output buffer (choice)
+    - outcnt -> number of elements received from each (integer)
+    - outtype -> datatype of output buffer elements (handle)
+    - root -> process id of root process (integer)
+    - comm -> communicator (handle)

@@ -4,7 +4,7 @@
     - Nombre del alumno: Isai Vicente Moreno Lara
     - Clave del alumno: 324591
     - Carrera: Ing. Sistemas Inteligentes
-    - Nombre de tarea o programa: Impreción de arreglo con bcast
+    - Nombre de tarea o programa: Impresión de arreglo con bcast
     - Avance logrado (0 a 100%): 100%
 */
 #include <stdio.h>
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 {
     srand(time(NULL));
     int idProc;
-    int N = 5;
+    int N = 10;
     float *a;
 
     MPI_Init(&argc, &argv);
